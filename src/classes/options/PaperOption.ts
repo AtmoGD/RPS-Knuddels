@@ -1,4 +1,3 @@
-import Phaser from "phaser";
 import GameScene from "../../scenes/Game";
 import { Option } from "../Option";
 import { Choice } from "../Choice";
