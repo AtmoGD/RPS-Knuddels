@@ -139,7 +139,11 @@ export class Animation extends Phaser.GameObjects.Container {
     });
   }
 
-  protected wiggle(startAngle: number = 10, speed: number = 1, wiggles: number = 2): void {
+  protected wiggle(
+    startAngle: number = 10,
+    speed: number = 1,
+    wiggles: number = 2
+  ): void {
     this.angle = startAngle;
 
     this.scene.tweens.add({

@@ -108,9 +108,12 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private vanishUnusedOptions(choice: Choice) {
-    if (this.rockOption && this.rockOption.getChoice() != choice) this.rockOption?.vanish();
-    if (this.paperOption && this.paperOption.getChoice() != choice) this.paperOption.vanish();
-    if (this.scissorsOption && this.scissorsOption.getChoice() != choice) this.scissorsOption.vanish();
+    if (this.rockOption && this.rockOption.getChoice() != choice)
+      this.rockOption?.vanish();
+    if (this.paperOption && this.paperOption.getChoice() != choice)
+      this.paperOption.vanish();
+    if (this.scissorsOption && this.scissorsOption.getChoice() != choice)
+      this.scissorsOption.vanish();
   }
 
   private resetOptions(): void {
@@ -140,9 +143,20 @@ export default class GameScene extends Phaser.Scene {
     let width: number = this.game.config.width as number;
     let height: number = this.game.config.height as number;
 
-    let texture: Phaser.Textures.CanvasTexture = this.textures.createCanvas("gradient", width, height);
+    let texture: Phaser.Textures.CanvasTexture = this.textures.createCanvas(
+      "gradient",
+      width,
+      height
+    );
     let context: CanvasRenderingContext2D = texture.getContext();
-    let gradient: CanvasGradient = context.createRadialGradient(width / 2, height / 2, 800, width, height, 0);
+    let gradient: CanvasGradient = context.createRadialGradient(
+      width / 2,
+      height / 2,
+      800,
+      width,
+      height,
+      0
+    );
 
     gradient.addColorStop(0, "#61CEF2");
     gradient.addColorStop(1, "#3867F5");

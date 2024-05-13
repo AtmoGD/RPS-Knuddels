@@ -11,7 +11,13 @@ export class Option extends Phaser.GameObjects.Container {
   private selected: boolean = false;
   private icon: Image | null = null;
 
-  constructor(scene: GameScene, x: number, y: number, choice: Choice, isInteractable: boolean = true) {
+  constructor(
+    scene: GameScene,
+    x: number,
+    y: number,
+    choice: Choice,
+    isInteractable: boolean = true
+  ) {
     super(scene, x, y);
 
     this.startX = x;
