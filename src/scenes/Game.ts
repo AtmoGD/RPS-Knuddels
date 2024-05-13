@@ -33,20 +33,34 @@ export default class GameScene extends Phaser.Scene {
   private lostAnimation: Animation | null = null;
   private drawAnimation: Animation | null = null;
 
+  private backgroundMusic: Phaser.Sound.BaseSound | null = null;
+
+  public slideSound: Phaser.Sound.BaseSound | null = null;
+  public clickSound: Phaser.Sound.BaseSound | null = null;
+  public loseSound: Phaser.Sound.BaseSound | null = null;
+  public winSound: Phaser.Sound.BaseSound | null = null;
+  public drawSound: Phaser.Sound.BaseSound | null = null;
+
   constructor() {
     super("GameScene");
   }
 
   preload(): void {
-    this.load.svg("Icon-Rock", "assets/Icon_Rock.svg");
-    this.load.svg("Icon-Paper", "assets/Icon_Paper.svg");
-    this.load.svg("Icon-Scissors", "assets/Icon_Scissors.svg");
-    this.load.image("Crown", "assets/Icon_Crown.png");
-    this.load.image("Skull", "assets/Icon_Skull.png");
-    this.load.image("Dots", "assets/Icon_Dots.png");
-    this.load.image("Choose", "assets/Choose.png");
-    this.load.image("Option-BG", "assets/Option_Background.png");
-    this.load.image("Background", "assets/CircusTent.png");
+    this.load.svg("Icon-Rock", "assets/images/Icon_Rock.svg");
+    this.load.svg("Icon-Paper", "assets/images/Icon_Paper.svg");
+    this.load.svg("Icon-Scissors", "assets/images/Icon_Scissors.svg");
+    this.load.image("Crown", "assets/images/Icon_Crown.png");
+    this.load.image("Skull", "assets/images/Icon_Skull.png");
+    this.load.image("Dots", "assets/images/Icon_Dots.png");
+    this.load.image("Choose", "assets/images/Choose.png");
+    this.load.image("Option-BG", "assets/images/Option_Background.png");
+    this.load.image("Background", "assets/images/CircusTent.png");
+    this.load.audio("Slide", "assets/sounds/Slide.wav");
+    this.load.audio("Click", "assets/sounds/Click.ogg");
+    this.load.audio("Lose", "assets/sounds/Lose.mp3");
+    this.load.audio("Won", "assets/sounds/Win.mp3");
+    this.load.audio("Draw", "assets/sounds/Draw.mp3");
+    this.load.audio("Background", "assets/sounds/Music.mp3");
   }
 
   create(): void {
@@ -65,6 +79,18 @@ export default class GameScene extends Phaser.Scene {
     this.wonAnimation = new WonAnimation(this);
     this.lostAnimation = new LostAnimation(this);
     this.drawAnimation = new DrawAnimation(this);
+
+    this.slideSound = this.sound.add("Slide");
+    this.clickSound = this.sound.add("Click");
+    this.loseSound = this.sound.add("Lose");
+    this.winSound = this.sound.add("Won");
+    this.drawSound = this.sound.add("Draw");
+
+    this.backgroundMusic = this.sound.add("Background");
+    this.backgroundMusic.play({
+      volume: 0.1,
+      loop: true,
+    });
   }
 
   public async playerChose(option: Option): Promise<void> {
@@ -102,7 +128,7 @@ export default class GameScene extends Phaser.Scene {
     await this.delay(1000);
     this.enemyOption?.easeToTop();
 
-    await this.delay(500);
+    await this.delay(800);
     this.resetOptions();
     this.chooseAnimation?.Show();
   }

@@ -1,13 +1,21 @@
 import Phaser from "phaser";
+import GameScene from "../scenes/Game";
 
 type Image = Phaser.GameObjects.Image;
 
 export class Animation extends Phaser.GameObjects.Container {
-  protected gameWidth: number = this.scene.game.config.width as number;
-  protected gameHeight: number = this.scene.game.config.height as number;
+  protected gameWidth: number;
+  protected gameHeight: number;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, image: string) {
+  public scene: GameScene;
+
+  constructor(scene: GameScene, x: number, y: number, image: string) {
     super(scene, x, y);
+
+    this.scene = scene;
+
+    this.gameWidth = this.scene.game.config.width as number;
+    this.gameHeight = this.scene.game.config.height as number;
 
     this.scale = 0;
     this.alpha = 0;

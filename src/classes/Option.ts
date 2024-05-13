@@ -11,6 +11,8 @@ export class Option extends Phaser.GameObjects.Container {
   private selected: boolean = false;
   private icon: Image | null = null;
 
+  public scene: GameScene;
+
   constructor(
     scene: GameScene,
     x: number,
@@ -19,6 +21,8 @@ export class Option extends Phaser.GameObjects.Container {
     isInteractable: boolean = true
   ) {
     super(scene, x, y);
+
+    this.scene = scene;
 
     this.startX = x;
     this.startY = y;
@@ -30,6 +34,17 @@ export class Option extends Phaser.GameObjects.Container {
     this.addCallbacks(scene);
 
     scene.add.existing(this);
+  }
+
+  public updateChoice(choice: Choice): void {
+    this.choice = choice;
+
+    if (this.icon) {
+      this.icon?.setTexture("Icon-" + choice);
+    } else {
+      this.icon = this.scene.add.image(0, 0, "Icon-" + choice);
+      this.add(this.icon);
+    }
   }
 
   private addBounds(): void {
@@ -62,17 +77,6 @@ export class Option extends Phaser.GameObjects.Container {
     return this.choice;
   }
 
-  public updateChoice(choice: Choice): void {
-    this.choice = choice;
-
-    if (!this.icon) {
-      this.icon = this.scene.add.image(0, 0, "Icon-" + choice);
-      this.add(this.icon);
-    } else {
-      this.icon?.setTexture("Icon-" + choice);
-    }
-  }
-
   private hover(): void {
     if (this.selected) return;
 
@@ -100,6 +104,7 @@ export class Option extends Phaser.GameObjects.Container {
   private select(): void {
     this.unHover();
     this.selected = true;
+    this.scene.clickSound?.play({ volume: 0.1 });
 
     this.scene.tweens.add({
       targets: this,
@@ -127,6 +132,8 @@ export class Option extends Phaser.GameObjects.Container {
   }
 
   public easeFromTop(): void {
+    this.scene.slideSound?.play({ volume: 0.1 });
+
     this.scene.tweens.add({
       targets: this,
       y: this.startY + 250,
@@ -136,6 +143,7 @@ export class Option extends Phaser.GameObjects.Container {
   }
 
   public easeToTop() {
+    this.scene.slideSound?.play({ volume: 0.1 });
     this.scene.tweens.add({
       targets: this,
       y: this.startY,
@@ -146,6 +154,7 @@ export class Option extends Phaser.GameObjects.Container {
 
   public reset(): void {
     this.selected = false;
+    this.scene.slideSound?.play();
     this.scene.tweens.add({
       targets: this,
       x: this.startX,

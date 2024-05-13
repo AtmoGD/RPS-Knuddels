@@ -33,3 +33,15 @@ The icons are taken from [this repository](https://github.com/Ayce45/rock-paper-
 The ui is from [here](https://penzilla.itch.io/vector-icon-pack)
 
 The font is from [here](https://www.dafont.com/cute-dino-2.font?fpp=200)
+
+The slide sound is from [here](https://opengameart.org/content/ui-sound-effects-library)
+
+The click sound is from [here](https://kenney.nl/assets/ui-audio)
+
+Win sound is from [here](https://www.zapsplat.com/music/alert-prompt-win-positive-tone-000/)
+
+Lose sound is from [here](https://www.zapsplat.com/music/game-sound-negative-incorrect-lose-playful-high-end-descending/)
+
+Draw sound is from [here](https://www.zapsplat.com/music/retro-arcade-style-game-sound-scanner/)
+
+The music is from [here](https://www.zapsplat.com/music/game-music-childrens-game-soft-warm-and-sincere-picked-guitar-warm-arpeggios-glockenspiel-melody/)

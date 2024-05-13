@@ -1,12 +1,13 @@
 import Phaser from "phaser";
 import { Animation } from "../Animation";
+import GameScene from "../../scenes/Game";
 
 export class ChooseAnimation extends Animation {
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: GameScene) {
     super(scene, 0, 0, "Choose");
 
-    this.x = (scene.game.config.width as number) / 2;
-    this.y = (scene.game.config.height as number) / 2;
+    this.x = this.gameWidth / 2;
+    this.y = this.gameHeight / 2;
 
     this.scale = 0;
     this.alpha = 0;
