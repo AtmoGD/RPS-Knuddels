@@ -8,21 +8,10 @@ import { WonAnimation } from "../classes/animations/WonAnimation";
 import { LostAnimation } from "../classes/animations/LostAnimation";
 import { DrawAnimation } from "../classes/animations/DrawAnimation";
 import { ChooseAnimation } from "../classes/animations/ChooseAnimation";
-
-const positionRock = {
-  x: 200,
-  y: 500,
-};
-
-const positionPaper = {
-  x: 400,
-  y: 500,
-};
-
-const positionScissors = {
-  x: 600,
-  y: 500,
-};
+import { RockOption } from "../classes/options/RockOption";
+import { PaperOption } from "../classes/options/PaperOption";
+import { ScissorsOption } from "../classes/options/ScissorsOption";
+import { EnemyOption } from "../classes/options/EnemyOption";
 
 const rules = {
   Rock: ["Scissors"],
@@ -34,11 +23,10 @@ export default class GameScene extends Phaser.Scene {
   private playerScore: Score | null = null;
   private enemyScore: Score | null = null;
 
-  private optionRock: Option | null = null;
-  private optionPaper: Option | null = null;
-  private optionScissors: Option | null = null;
-
-  private enemyOption: Option | null = null;
+  private rockOption: RockOption | null = null;
+  private paperOption: PaperOption | null = null;
+  private scissorsOption: ScissorsOption | null = null;
+  private enemyOption: EnemyOption | null = null;
 
   private chooseAnimation: ChooseAnimation | null = null;
   private wonAnimation: Animation | null = null;
@@ -65,14 +53,13 @@ export default class GameScene extends Phaser.Scene {
     this.createBackroundGradient();
     new BackgroundAnimation(this);
 
-    this.optionRock = new Option(this, positionRock.x, positionRock.y, Choice.ROCK);
-    this.optionPaper = new Option(this, positionPaper.x, positionPaper.y, Choice.PAPER);
-    this.optionScissors = new Option(this, positionScissors.x, positionScissors.y, Choice.SCISSORS);
-
-    this.enemyOption = new Option(this, 400, -100, Choice.ROCK, false);
-
     this.playerScore = new Score(this, 50, 50, "You");
     this.enemyScore = new Score(this, 625, 50, "Enemy");
+
+    this.rockOption = new RockOption(this, 200, 500);
+    this.paperOption = new PaperOption(this, 400, 500);
+    this.scissorsOption = new ScissorsOption(this, 600, 500);
+    this.enemyOption = new EnemyOption(this, 400, -100);
 
     this.chooseAnimation = new ChooseAnimation(this);
     this.wonAnimation = new WonAnimation(this);
@@ -80,11 +67,13 @@ export default class GameScene extends Phaser.Scene {
     this.drawAnimation = new DrawAnimation(this);
   }
 
-  update(): void {}
-
   public async playerChose(option: Option): Promise<void> {
+    if (!this.enemyOption) return;
+
     const playerChoice: Choice = option.getChoice();
-    const enemyChoice: Choice = this.getRandomChoice();
+
+    this.enemyOption.useRandomChoice();
+    const enemyChoice: Choice = this.enemyOption.getChoice();
 
     const playerBeatsEnemy: boolean = this.beats(playerChoice, enemyChoice);
     const enemyBeatsPlayer: boolean = this.beats(enemyChoice, playerChoice);
@@ -109,6 +98,7 @@ export default class GameScene extends Phaser.Scene {
     } else {
       alert("Something went really really wrong!");
     }
+
     await this.delay(1000);
     this.enemyOption?.easeToTop();
 
@@ -118,28 +108,15 @@ export default class GameScene extends Phaser.Scene {
   }
 
   private vanishUnusedOptions(choice: Choice) {
-    if (this.optionRock && this.optionRock.getChoice() != choice) this.optionRock?.vanish();
-    if (this.optionPaper && this.optionPaper.getChoice() != choice) this.optionPaper.vanish();
-    if (this.optionScissors && this.optionScissors.getChoice() != choice) this.optionScissors.vanish();
+    if (this.rockOption && this.rockOption.getChoice() != choice) this.rockOption?.vanish();
+    if (this.paperOption && this.paperOption.getChoice() != choice) this.paperOption.vanish();
+    if (this.scissorsOption && this.scissorsOption.getChoice() != choice) this.scissorsOption.vanish();
   }
 
   private resetOptions(): void {
-    this.optionRock?.reset();
-    this.optionPaper?.reset();
-    this.optionScissors?.reset();
-  }
-
-  private getRandomChoice(): Choice {
-    let rndNumber: number = Math.floor(Math.random() * 3);
-    switch (rndNumber) {
-      case 0:
-        return Choice.ROCK;
-      case 1:
-        return Choice.PAPER;
-      case 2:
-        return Choice.SCISSORS;
-    }
-    return Choice.ROCK;
+    this.rockOption?.reset();
+    this.paperOption?.reset();
+    this.scissorsOption?.reset();
   }
 
   private beats(choiceA: Choice, choiceB: Choice): boolean {
@@ -163,9 +140,9 @@ export default class GameScene extends Phaser.Scene {
     let width: number = this.game.config.width as number;
     let height: number = this.game.config.height as number;
 
-    let texture = this.textures.createCanvas("gradient", width, height);
-    let context = texture.getContext();
-    let gradient = context.createRadialGradient(width / 2, height / 2, 800, width, height, 0);
+    let texture: Phaser.Textures.CanvasTexture = this.textures.createCanvas("gradient", width, height);
+    let context: CanvasRenderingContext2D = texture.getContext();
+    let gradient: CanvasGradient = context.createRadialGradient(width / 2, height / 2, 800, width, height, 0);
 
     gradient.addColorStop(0, "#61CEF2");
     gradient.addColorStop(1, "#3867F5");

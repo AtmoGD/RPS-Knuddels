@@ -34,6 +34,7 @@ export class Option extends Phaser.GameObjects.Container {
   private addCallbacks(scene: GameScene): void {
     this.on("pointerdown", () => {
       if (this.selected) return;
+
       scene.playerChose(this);
       this.select();
     });

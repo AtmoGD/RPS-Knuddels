@@ -9,7 +9,7 @@ export class DrawAnimation extends Animation {
   }
 
   public override play(): void {
-    this.zoomInAndOut(1);
-    this.fadeInAndOut(1);
+    this.zoomInAndOut();
+    this.fadeInAndOut();
   }
 }
