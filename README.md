@@ -10,12 +10,12 @@ This is a [Phaser 3](https://github.com/photonstorm/phaser) starter with [TypeSc
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `yarn install` | Install project dependencies |
-| `yarn dev` | Builds project and open web server, watching for changes |
-| `yarn build` | Builds code bundle with production settings  |
-| `yarn serve` | Run a web server to serve built code bundle |
+| Command        | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `yarn install` | Install project dependencies                             |
+| `yarn dev`     | Builds project and open web server, watching for changes |
+| `yarn build`   | Builds code bundle with production settings              |
+| `yarn serve`   | Run a web server to serve built code bundle              |
 
 ## Development
 
@@ -25,3 +25,11 @@ server by running `yarn dev` and navigate to http://localhost:3000.
 ## Production
 
 After running `yarn build`, the files you need for production will be on the `dist` folder. To test code on your `dist` folder, run `yarn serve` and navigate to http://localhost:5000
+
+## Credits
+
+The icons are taken from [this repository](https://github.com/Ayce45/rock-paper-scissors)
+
+The ui is from [here](https://penzilla.itch.io/vector-icon-pack)
+
+The font is from [here](https://www.dafont.com/cute-dino-2.font?fpp=200)
